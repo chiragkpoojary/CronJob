@@ -1,25 +1,27 @@
 name: Auto Commit
 
+permissions:
+  contents: write
+
 on:
   schedule:
-    - cron: "10 * * * *"   # Runs at 10 AM and 10 PM IST (convert to UTC)
+    - cron: "30 4 * * *"   # 10:00 AM IST
+    - cron: "30 16 * * *"  # 10:00 PM IST
   workflow_dispatch:        # Allow manual trigger
 
 jobs:
   auto-commit:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Make changes
-        run: |
-          echo "Updated on $(date)" >> log.txt
+        run: echo "$(date)" >> log.txt
 
-      - name: Commit and push
+      - name: Commit and Push changes
         run: |
           git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add .
-          git commit -m "chore: auto-update on $(date)" || echo "No changes to commit"
-          git push
+          git commit -m "chore: auto-update on $(date -u)" || echo "No changes to commit"
+          git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }} HEAD:main
