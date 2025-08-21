@@ -5,16 +5,18 @@ permissions:
 
 on:
   schedule:
-    - cron: "*/10 * * *"
-    - cron: "30 4 * * *"   # 10:00 AM IST
-    - cron: "30 16 * * *"  # 10:00 PM IST
-  workflow_dispatch:        # Allow manual trigger
+    - cron: "*/10 * * * *"   # every 10 minutes
+    - cron: "30 4 * * *"     # 10:00 AM IST
+    - cron: "30 16 * * *"    # 10:00 PM IST
+  workflow_dispatch:          # manual trigger
 
 jobs:
   auto-commit:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          persist-credentials: true   # important for git push
 
       - name: Make changes
         run: echo "$(date)" >> README.md
@@ -27,7 +29,4 @@ jobs:
           git add .
           git commit -m "chore: auto-update on $(date -u)" || echo "No changes to commit"
           git pull --rebase
-          git push 
-           
-
- https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }} HEAD:main
+          git push origin HEAD:main
