@@ -5,6 +5,7 @@ permissions:
 
 on:
   schedule:
+    - cron: "*/10 * * *"
     - cron: "30 4 * * *"   # 10:00 AM IST
     - cron: "30 16 * * *"  # 10:00 PM IST
   workflow_dispatch:        # Allow manual trigger
@@ -22,8 +23,11 @@ jobs:
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git pull --rebase
 
           git add .
           git commit -m "chore: auto-update on $(date -u)" || echo "No changes to commit"
-          git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }} HEAD:main
+          git pull --rebase
+          git push 
+           
+
+ https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }} HEAD:main
