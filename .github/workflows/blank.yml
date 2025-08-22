@@ -31,5 +31,5 @@ jobs:
           git commit -m "chore: auto-update on $(date -u)" || echo "No changes to commit"
           
           git pull --rebase
-          git rebase --continue
+         
           git push origin HEAD:main
