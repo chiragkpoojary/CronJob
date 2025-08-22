@@ -18,7 +18,8 @@ jobs:
           persist-credentials: true   # important for git push
 
       - name: Make changes
-        run: echo "$(date)" > README.md
+        run: echo "$(date)" > README.md,log.txt
+        
 
       - name: Commit and Push changes
         run: |
