@@ -7,6 +7,7 @@ on:
   schedule:
     - cron: "30 4 * * *"     # 10:00 AM IST
     - cron: "30 16 * * *"    # 10:00 PM IST
+    - cron: "10 10 * * *"
   workflow_dispatch:          # manual trigger
 
 jobs:
@@ -18,7 +19,7 @@ jobs:
           persist-credentials: true   # important for git push
 
       - name: Make changes
-        run: echo "$(date)" > README.md,log.txt
+        run: echo "$(date)" > README.md
         
 
       - name: Commit and Push changes
