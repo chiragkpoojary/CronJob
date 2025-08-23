@@ -7,7 +7,7 @@ on:
   schedule:
     - cron: "30 4 * * *"     # 10:00 AM IST
     - cron: "30 16 * * *"    # 10:00 PM IST
-    - cron: "10 10 * * *"
+    - cron: "40 4 * * *"     # 10:10 AM IST (if that’s what you intended)
   workflow_dispatch:          # manual trigger
 
 jobs:
@@ -16,11 +16,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          persist-credentials: true   # important for git push
+          persist-credentials: true   # allows git push
 
       - name: Make changes
         run: echo "$(date)" > README.md
-        
 
       - name: Commit and Push changes
         run: |
@@ -29,7 +28,4 @@ jobs:
 
           git add .
           git commit -m "chore: auto-update on $(date -u)" || echo "No changes to commit"
-          
-          git pull --rebase
-         
           git push origin HEAD:main
