@@ -1,31 +1,31 @@
-name: Auto Commit
+# name: Auto Commit
 
-permissions:
-  contents: write
+# permissions:
+#   contents: write
 
-on:
-  schedule:
-    - cron: "30 4 * * *"     # 10:00 AM IST
-    - cron: "30 16 * * *"    # 10:00 PM IST
-    - cron: "40 4 * * *"     # 10:10 AM IST (if that’s what you intended)
-  workflow_dispatch:          # manual trigger
+# on:
+#   schedule:
+#     - cron: "30 4 * * *"      
+#     - cron: "30 16 * * *"    
+    
+#   workflow_dispatch:          
 
-jobs:
-  auto-commit:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          persist-credentials: true   # allows git push
+# jobs:
+#   auto-commit:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - uses: actions/checkout@v4
+#         with:
+#           persist-credentials: true   
 
-      - name: Make changes
-        run: echo "$(date)" > README.md
+#       - name: Make changes
+#         run: echo "$(date)" > README.md
 
-      - name: Commit and Push changes
-        run: |
-          git config --global user.name "chirag_k_poojary"
-          git config --global user.email "chiragkpoojary30@gmail.com"
+#       - name: Commit and Push changes
+#         run: |
+#           git config --global user.name "chirag_k_poojary"
+#           git config --global user.email "chiragkpoojary30@gmail.com"
 
-          git add .
-          git commit -m "chore: auto-update on $(date -u)" || echo "No changes to commit"
-          git push origin HEAD:main
+#           git add .
+#           git commit -m "chore: auto-update on $(date -u)" || echo "No changes to commit"
+#           git push origin HEAD:main
